@@ -1,7 +1,0 @@
-[default]
-key = d4555884848484c48a4cac88ac
-server = 15282
-userid = xxxxPserverVote
-[option]
-maxvote = 500
-autoproxy = 0
