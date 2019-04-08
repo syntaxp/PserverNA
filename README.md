@@ -84,9 +84,9 @@ autoproxy = 1
 
 ```
 ## Proxy
-**[proxylist.txt](https://github.com/syntaxp/PserverNA/blob/master/control/proxylist.txt)**
+**[proxy.txt](https://github.com/syntaxp/PserverNA/blob/master/control/proxy.txt)**
 ```text
-proxylist.txt จะเป็นไฟล์ txt ที่ใช้สำหรับเก็บรายชื่อ proxy ต่างๆที่ใช้สำหรับโหวต
+proxy.txt จะเป็นไฟล์ txt ที่ใช้สำหรับเก็บรายชื่อ proxy ต่างๆที่ใช้สำหรับโหวต
 เนื้องจาก การโหวต Playserver ปกติ เมื่อโหวตสำเร็จ จะติดดีเลเป็นเวล 61 วิ
 เราจึงจำเป็นต้องมี proxy ใช้สำหรับโหวตเพิ่มขึ้นเพื่อการทำงานโหวตที่ไวขึ้น
 Playserver กำจัดสิทธ์โหวตให้เพียง IP ที่ให้บริการในไทย นั้นหมายความว่า เราเลือกเฉพาะ Proxy ไทยในการโหวต
