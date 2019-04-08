@@ -77,7 +77,6 @@ autoproxy = 0 # ค้นหาพร๊อกซี่อัตโนมัต�
 key_anticap = d4555884848484c48a4cac88ac
 server = 15282
 userid  = pserverna
-proxy = proxylist.txt
 
 [option]
 maxvote = 1000
