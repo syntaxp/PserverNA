@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="https://github.com/syntaxp/PserverNA">
-    <img src="https://user-images.githubusercontent.com/47280575/54013280-1b047200-41ab-11e9-8419-7d478f197228.png" alt="PserverNA logo" width="72" height="72">
+    <img src="https://user-images.githubusercontent.com/47280575/55755362-ff75db00-5a78-11e9-8a33-6ea3af4bdb0e.jpg" alt="PserverNA logo" width="72" height="72">
   </a>
 </p>
 <h3 align="center">PserverNA</h3>
@@ -25,8 +25,6 @@
 - [KEY](#key)
 - [การตั่งค่า config.txt](#config)
 - [Proxylist.txt](#proxy)
-- [Private Proxy](#private-proxy)
-- [Proxy Checker](#proxy-checker)
 - [UPDATE!!](https://github.com/syntaxp/PserverNA/blob/master/update.md)
 
 ## Quick start
@@ -64,40 +62,27 @@ KEY จะถูกสร้างให้อัตโนมัติ หลั
 
 ```python
 [default]
-key_anticap = # key ของ Anticaptcha
-server_id = # sever id ตัวอย่าง url <playserver.in.th/index.php/Vote/prokud/PserverN-15282> id sever คือ 15282
-userid  = #user id ของเกม
-proxy = proxylist.txt # ไฟล์ที่ทำการเก็บ List proxy ไว้
-
-[private] # ระะบบ private proxy หรือ proxy ที่เช่าจากเว็ป
-private = # 0 = ปิด 1 = เปิด
-USER = #user ของเว็ปที่เช่า (ส่วนมากใช่เป็น email)
-PASS = #pssword ของเว็ปที่เช่า
+key = # key ของ Anticaptcha
+server = # sever id ตัวอย่าง url <playserver.in.th/index.php/Vote/prokud/PserverN-15282> id sever คือ 15282
+userid = #user id ของเกม
 
 [option]
-maxvote = # จำนวนโหวตที่ต้องการ ควรมากกว่ ip ที่มีใน list
-failvote = # จำนวนครั้งที่ ip โหวตพลาด ระบบจะเตะ ip ออก
-requestfail = # จำนวครั้งที่ ip พยามเชื่อมต่อไม่สำเร็จ ระบบจะเตะ ip ออก
-requesttimeout = # ระยะเวลาในการทำงานเรียกข้อมูล ส่งข้อมูล ควรตั่งให้มากกว่า 3 ขึ้นไป
+maxvote = 500 # จำนวนโหวตที่ต้องการ ควรมากกว่ ip ที่มีใน list
+autoproxy = 0 # ค้นหาพร๊อกซี่อัตโนมัติ (bata) 1 เปิด/  0 ปิด
+
 ```
 ***example: config.txt***
 ```java
 [default]
-key_anticap = d2ed549112be82d92add5c9bf7f1cb57
-server_id = 15282
+key_anticap = d4555884848484c48a4cac88ac
+server = 15282
 userid  = pserverna
 proxy = proxylist.txt
 
-[private] 
-private = 0
-USER = off
-PASS = off
-
 [option]
 maxvote = 1000
-failvote = 3
-requestfail = 10
-requesttimeout = 3
+autoproxy = 1
+
 ```
 ## Proxy
 **[proxylist.txt](https://github.com/syntaxp/PserverNA/blob/master/control/proxylist.txt)**
@@ -131,50 +116,5 @@ proxy จะมี 2 แบบ
 103.18.32.242:46734
 103.19.110.177:8080
 ```
-
-## Private Proxy
-**[private.txt](https://github.com/syntaxp/PserverNA/blob/master/control/private.txt)**
-
-**[config.txt](https://github.com/syntaxp/PserverNA/blob/master/control/config.txt)**
-
-```text
-ในส่วนของ Private Proxy จะเป็นการรองรับระบบ proxy เช่า ตามเว็ปต่างๆซึ่งมีความส่วนตัวในการใช้
-หมายความว่าเวลาเราใช้โหวต proxy จะไม่ไปชนกับคนอื่น แต่ต้องดูด้วยว่าเจ้าของเว็ปที่ให้บริการเช่า ปล่อย proxy เป็นแบบ public สำหรับสมาชิกรึป่าว
-การตั่งค่าเราจำเป็นต้องเปิดใช้งานในส่วนของ config.txt หัวข้อ private เป็น 1 และใส่ email หรือ username /pass ที่เราสมัครกับทางเว็ป
-```
-***example: config.txt***
-```java
-[private] 
-private = 1
-USER = pserverna@proxyweb.com
-PASS = 12345678
-```
-
-```text
-ในส่วนของ proxy เราจะเก็บ proxy พวกนี้ไว้ใน private.txt
-```
-***example: private.txt***
-```text
-103.15.140.141:44759
-103.15.140.142:44759
-103.15.140.177:44759
-103.15.226.124:80
-103.15.241.161:8080
-103.15.245.26:8080
-103.15.51.160:8080
-103.15.83.73:58486
-103.15.83.82:8080
-103.16.61.46:52424
-103.17.38.24:8080
-103.18.243.154:8080
-103.18.32.242:46734
-103.19.110.177:8080
-```
-## Proxy Checker
-proxy checker mode จะเป็นการ เช็ค proxy ที่อยู่ในไฟล์ **[list.txt](https://github.com/syntaxp/PserverNA/blob/master/ProxyChecker/list.txt)**
-
-โดย proxy ที่ใช้งานได้จะถูกเก็บไปยัง ไฟล์ **[proxylist.txt](https://github.com/syntaxp/PserverNA/blob/master/control/proxylist.txt)** อัตโนมัติ
-
-![proxy checker](https://user-images.githubusercontent.com/47280575/54040675-8c1e4680-41f8-11e9-8a7b-79fe3147d1cd.png)
 
 
