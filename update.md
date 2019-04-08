@@ -2,13 +2,13 @@
   ### version 4.0.0  :speech_balloon:
 ```c
 PserverNA
-└── update 
+└── update แก้ไขระบบใหม่ให้ยืดหยุ่นได้ดียิ่งขึ้น
       └── version.json @ version 4.0.0
           ├────── control/config.txt
           |          └── @ ลบคำสั่งที่ไม่จำเป็นออก
           |
           ├────── main.py & PserverNA.exe 
-          |          └──  @ แก้ไขระบบใหม่ให้ยืดหยุ่นได้ดียิ่งขึ้น
+          |               @ main.py เปลี่ยนเป็น PserverNA.py
           |
           |
           ├──────── delete ProxyChecker ลบระบบ ProxyChecker
