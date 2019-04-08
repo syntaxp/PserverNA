@@ -3,7 +3,7 @@
 ```c
 PserverNA
 └── update 
-      └── version.json @ version 4.0
+      └── version.json @ version 4.0.0
           ├────── control/config.txt
           |          └── @ ลบคำสั่งที่ไม่จำเป็นออก
           |
