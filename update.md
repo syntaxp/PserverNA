@@ -1,4 +1,22 @@
 
+  ### version 4.0.0  :speech_balloon:
+```c
+PserverNA
+└── update 
+      └── version.json @ version 4.0
+          ├────── control/config.txt
+          |          └── @ ลบคำสั่งที่ไม่จำเป็นออก
+          |
+          ├────── main.py & PserverNA.exe 
+          |          └──  @ แก้ไขระบบใหม่ให้ยืดหยุ่นได้ดียิ่งขึ้น
+          |
+          |
+          ├──────── delete ProxyChecker ลบระบบ ProxyChecker
+          |
+          └──────── @ Auto Porxy เพิ่มระบบ ค้นหา PROXY AUTO
+```
+
+
   ### version 2.0.3.2  :speech_balloon:
 ```c
 PserverNA
