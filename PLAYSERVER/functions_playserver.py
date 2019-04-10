@@ -7,7 +7,7 @@ from colorama import init, Fore, Back, Style
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 session = requests.Session()
-retry = Retry(connect=30, backoff_factor=0.5)
+retry = Retry(connect=50, backoff_factor=0.5)
 adapter = HTTPAdapter(max_retries=retry)
 session.mount('http://', adapter)
 session.mount('https://', adapter)
@@ -16,10 +16,10 @@ init(convert=True)
 def GETIMAGE(proxies):
     try:
         time.sleep(0.5)
-        requestid = session.post(url_getpic,verify=False, timeout=100, headers=headerXtap,proxies=proxies).json()
+        requestid = session.post(url_getpic,verify=False, timeout=200, headers=headerXtap,proxies=proxies).json()
         IMAGE_ID = requestid['checksum']
         time.sleep(0.5)
-        IMAGECT = session.get(url_image + IMAGE_ID,verify=False, timeout=100,  headers=headerXtap,proxies=proxies)
+        IMAGECT = session.get(url_image + IMAGE_ID,verify=False, timeout=200,  headers=headerXtap,proxies=proxies)
         base64pic = base64.b64encode(IMAGECT.content).decode('utf-8')
         if base64pic.find('iVBORw0KGgoAAAANSUhE') > -1:
             IMAGE = {'id':IMAGE_ID,
@@ -36,7 +36,7 @@ def POSTIMAGE(self,data_vote, proxies,taskid,proxy):
         try:
             status_post = ('\n PROXY    : {0} \n IMAGE ID : {1}\n CAPTCHA  : {2} \n STATUS   : {3}   DELAY : {4}   REPORT : {5}')
             time.sleep(0.5)
-            vote = session.post(url_submitpic,verify=False, timeout=100,headers=headerXtap,data=data_vote,proxies=proxies).json()
+            vote = session.post(url_submitpic,verify=False, timeout=200,headers=headerXtap,data=data_vote,proxies=proxies).json()
             if vote['success'] == True:
                 self.true +=1
                 status_end = status_post.format(proxy,data_vote['checksum'],data_vote['captcha'],vote['success'],vote['wait'],'0')
