@@ -7,7 +7,7 @@ from colorama import init, Fore, Back, Style
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 session = requests.Session()
-retry = Retry(connect=50, backoff_factor=0.5)
+retry = Retry(connect=100, backoff_factor=0.5)
 adapter = HTTPAdapter(max_retries=retry)
 session.mount('http://', adapter)
 session.mount('https://', adapter)

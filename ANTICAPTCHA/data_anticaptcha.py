@@ -1,3 +1,4 @@
+appid = 904
 create_task_url = ("https://api.anti-captcha.com/createTask")
 get_result_url = ("https://api.anti-captcha.com/getTaskResult")
 get_balance_url = ("https://api.anti-captcha.com/getBalance")

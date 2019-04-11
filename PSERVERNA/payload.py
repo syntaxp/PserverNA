@@ -7,10 +7,14 @@ from functions_playserver import *
 sys.path.insert(0, "ANTICAPTCHA/")
 from data_anticaptcha import*
 from functions_anticaptcha import *
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
 class PSERVERNA_PAYLOADS:
 
     def __init__(self):
         init(convert=True)
+        cls()
+        print('\n [-] Auto vote playserver runing checkproxy/vote . . . ')
         self.method_1()
     def method_1(self):
         def run(self):
@@ -39,6 +43,7 @@ class PSERVERNA_PAYLOADS:
             if int(self.autoproxy) == 1:
                 threading.Thread(target = autogetproxy, args = (self,)).start()
             updatestatus(self)
+
 
         def autogetproxy(self):
             while True:
@@ -110,5 +115,23 @@ class PSERVERNA_PAYLOADS:
             updatestatus(self)
             print(' Maxvote : '+ self.maxvote +' this proxy (' + proxy + ')stop working but another proxy Will work until completion')
             sys.exit()
+
+        run(self)
+
+
+
+class GETPROXYAUTO:
+    def __init__(self):
+        cls()
+        print('\n [-] Auto getproxy runing proxy working save to control/proxy.txt . . .')
+        init(convert=True)
+        self.method_1()
+    def method_1(self):
+        def run(self):
+            print(' coming soon')
+            time.sleep(5)
+            sys.exit()
+
+
 
         run(self)

@@ -18,7 +18,7 @@ def GETCAPCHA(self,base64):
         "minLength":6,
         "maxLength":6
         },
-        "softId":904,
+        "softId":appid,
         "languagePool":"en"
         }
         createTask  = requests.post(create_task_url,timeout=100,json=Taskdata).json()
@@ -28,7 +28,6 @@ def GETCAPCHA(self,base64):
                 "taskId": createTask['taskId']
                     }
             for timeout in range(60):
-
                 captcha_id = requests.post(get_result_url,timeout=100, json = TaskID).json()
                 if captcha_id['status'] != 'processing':
                     captcha = {'status':True,'text':captcha_id['solution']['text'],'cost':captcha_id['cost'],'taskId':createTask['taskId']}
