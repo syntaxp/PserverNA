@@ -14,12 +14,13 @@
    <a href="https://discord.gg/Mgu73TN">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSakv86QJPY-E6rxMEo_WzAwYUzyndjdY_d-Zu2ZOr9UuMjClxy5A" alt="discord logo" width="45" height="45">
   <a href="https://discord.gg/Mgu73TN">Discord</a>
-   ·
-       <a href="https://www.facebook.com/deerek.kantisriyanon.9">Facebook</a>
+
+
 </p>
 
-## คู่มือ การใช้งาน
 
+## คู่มือ การใช้งาน
+- <a href="https://www.youtube.com/watch?v=KWmf4K1T_SU">วิธีติดตั่ง/ตัวอย่าง(VIDEO)</a>
 - [Quick start](#quick-start)
 - [การทำงานเบื้องต้นของโปรแกรม](#basic-work)
 - [KEY](#key)
