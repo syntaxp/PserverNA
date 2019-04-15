@@ -14,12 +14,13 @@
    <a href="https://discord.gg/Mgu73TN">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSakv86QJPY-E6rxMEo_WzAwYUzyndjdY_d-Zu2ZOr9UuMjClxy5A" alt="discord logo" width="45" height="45">
   <a href="https://discord.gg/Mgu73TN">Discord</a>
-   ·
-       <a href="https://www.facebook.com/deerek.kantisriyanon.9">Facebook</a>
+
+
 </p>
 
-## คู่มือ การใช้งาน
 
+## คู่มือ การใช้งาน
+- <a href="https://www.youtube.com/watch?v=KWmf4K1T_SU">วิธีติดตั่ง/ตัวอย่าง(VIDEO)</a>
 - [Quick start](#quick-start)
 - [การทำงานเบื้องต้นของโปรแกรม](#basic-work)
 - [KEY](#key)
@@ -102,18 +103,15 @@ proxy จะมี 2 แบบ
 ```text
 103.15.140.141:44759
 103.15.140.142:44759
-103.15.140.177:44759
-103.15.226.124:80
-103.15.241.161:8080
-103.15.245.26:8080
-103.15.51.160:8080
-103.15.83.73:58486
-103.15.83.82:8080
-103.16.61.46:52424
-103.17.38.24:8080
-103.18.243.154:8080
-103.18.32.242:46734
-103.19.110.177:8080
 ```
+
+
+## Error
+```text
+"take a long time from https://anti-captcha.com" - ต้องเพิ่มค่าใช้จ่ายในการตอบแคปช่า
+```
+ไปที่ 
+[settings/apisetup](https://anti-captcha.com/clients/settings/apisetup)
+Maximum bid เพิ่มขึ้นเป็น 1.1 หรือมากกว่านั้น
 
 
