@@ -34,11 +34,15 @@ class PSERVERNA_PAYLOADS:
             with open('control/proxy.txt','r') as loadproxy:
                 proxylist = loadproxy.read().splitlines()
                 for proxy in proxylist:
-                    wgetproxy = re.search('(.+?):',proxy).group(1)
-                    if wgetproxy not in self.dic_proxy:
-                        self.dic_proxy.update({wgetproxy:wgetproxy})
-                        proxies = {'http': ('http://'+proxy),'https': ('https://'+proxy), 'ftp': ('ftp://'+proxy)}
-                        threading.Thread(target = PserverNA, args = (self,proxies,proxy)).start()
+                    try:
+                        wgetproxy = re.search('(.+?):',proxy).group(1)
+                        if wgetproxy not in self.dic_proxy:
+                            self.dic_proxy.update({wgetproxy:wgetproxy})
+                            proxies = {'http': ('http://'+proxy),'https': ('https://'+proxy), 'ftp': ('ftp://'+proxy)}
+                            threading.Thread(target = PserverNA, args = (self,proxies,proxy)).start()
+                    except:
+                        time.sleep(1)
+                        print('fail get proxy from proxy.txt')
             threading.Thread(target = getSBalance, args = (self,)).start()
             if int(self.autoproxy) == 1:
                 threading.Thread(target = autogetproxy, args = (self,)).start()
