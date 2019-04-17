@@ -16,7 +16,8 @@ def GETCAPCHA(self,base64):
         "numeric":False,
         "math":0,
         "minLength":6,
-        "maxLength":6
+        "maxLength":6,
+        "comment":"This app has requested a refund if an error has occurred from you by https://anti-captcha.com/clients/reports/refunds"
         },
         "softId":appid,
         "languagePool":"en"
