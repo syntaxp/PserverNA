@@ -49,7 +49,7 @@ def GETbalance(key):
         if p['errorId'] == 0:
             return p['balance']
         else:
-            print('can not get balance error : +p['errorDescription'])
+            print('can not get balance error :'+p['errorDescription'])
             return 0
     except:
         return 0
