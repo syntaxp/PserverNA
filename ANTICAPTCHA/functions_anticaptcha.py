@@ -42,10 +42,17 @@ def GETCAPCHA(self,base64):
         return 0
 
 def GETbalance(key):
-    data = {'clientKey':key}
-    time.sleep(0.5)
-    p = requests.post(get_balance_url,timeout=100,headers=header,json=data).json()
-    return p['balance']
+    try:
+        data = {'clientKey':key}
+        time.sleep(0.5)
+        p = requests.post(get_balance_url,timeout=100,headers=header,json=data).json()
+        if p['errorId'] == 0:
+            return p['balance']
+        else:
+            print('can not get balance error : +p['errorDescription'])
+            return 0
+    except:
+        return 0
 
 def reportIncorrectImageCaptcha(key,taskid):
     data = {
