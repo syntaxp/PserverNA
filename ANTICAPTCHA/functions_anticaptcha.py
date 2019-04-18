@@ -16,13 +16,14 @@ def GETCAPCHA(self,base64):
         "numeric":False,
         "math":0,
         "minLength":6,
-        "maxLength":6
+        "maxLength":6,
+        "comment":"This application has been report to anticapcha If your answer is wrong according to anticapcha policy from https://anti-captcha.com/clients/reports/refunds"
         },
         "softId":appid,
         "languagePool":"en"
         }
         createTask  = requests.post(create_task_url,timeout=100,json=Taskdata).json()
-        if createTask['errorId'] != 1:
+        if createTask['errorId'] == 0:
             TaskID = {
                 "clientKey":self.key,
                 "taskId": createTask['taskId']
@@ -35,7 +36,8 @@ def GETCAPCHA(self,base64):
                 else:
                     time.sleep(5)
         else:
-            return captcha['status':False]
+            captcha = {'status':False,'errorDescription':createTask['errorDescription']}
+            return captcha
     except:
         return 0
 

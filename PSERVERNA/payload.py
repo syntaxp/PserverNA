@@ -108,7 +108,7 @@ class PSERVERNA_PAYLOADS:
                                     delay = VOTE
                             updatestatus(self)
                         else:
-                            print(' '+IMAGE['id'] +' this capcha No answer from https://anti-captcha.com',flush=True)
+                            print(captcha['errorDescription'],flush=True)
                     else:
                         print(' take a long time from https://anti-captcha.com',flush=True)
                 else:
