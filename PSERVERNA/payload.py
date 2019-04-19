@@ -35,7 +35,10 @@ class PSERVERNA_PAYLOADS:
                 proxylist = loadproxy.read().splitlines()
                 for proxy in proxylist:
                     try:
-                        wgetproxy = re.search('(.+?):',proxy).group(1)
+                        if '@'  in proxy:
+                            wgetproxy = proxy.split("@")[1]
+                        else:
+                            wgetproxy, port = proxy.split(':')
                         if wgetproxy not in self.dic_proxy:
                             self.dic_proxy.update({wgetproxy:wgetproxy})
                             proxies = {'http': ('http://'+proxy),'https': ('https://'+proxy), 'ftp': ('ftp://'+proxy)}
