@@ -36,7 +36,8 @@ class PSERVERNA_PAYLOADS:
                 for proxy in proxylist:
                     try:
                         if '@'  in proxy:
-                            wgetproxy = proxy.split("@")[1]
+                            spinter = proxy.split("@")
+                            wgetproxy, port = spinter[2].split(':')
                         else:
                             wgetproxy, port = proxy.split(':')
                         if wgetproxy not in self.dic_proxy:
@@ -80,6 +81,7 @@ class PSERVERNA_PAYLOADS:
             ctypes.windll.kernel32.SetConsoleTitleW(j)
 
         def PserverNA(self,proxies,proxy):
+            print(proxy)
             self.proxywork += 1
             opentime = 0
             setdelay = 0
