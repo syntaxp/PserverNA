@@ -81,7 +81,6 @@ class PSERVERNA_PAYLOADS:
             ctypes.windll.kernel32.SetConsoleTitleW(j)
 
         def PserverNA(self,proxies,proxy):
-            print(proxy)
             self.proxywork += 1
             opentime = 0
             setdelay = 0
