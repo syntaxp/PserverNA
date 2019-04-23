@@ -31,6 +31,9 @@ class PSERVERNA_PAYLOADS:
             self.proxywork = 0
             self.balance = 0
             self.dic_proxy = {'proxylist':'newproxy'}
+            proxieNULL = {}
+            Cproxy = 'Private : *Proxy'
+            threading.Thread(target = PserverNA, args = (self,proxieNULL,Cproxy)).start()
             with open('control/proxy.txt','r') as loadproxy:
                 proxylist = loadproxy.read().splitlines()
                 for proxy in proxylist:
