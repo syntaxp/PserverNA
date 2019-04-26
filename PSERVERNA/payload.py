@@ -131,7 +131,8 @@ class PSERVERNA_PAYLOADS:
 
 
 
-class GETPROXYAUTO:
+class GETPROXYAUTOV1:
+
     def __init__(self):
         cls()
         print('\n [-] Auto getproxy runing proxy working save to control/proxy.txt . . .')
@@ -139,9 +140,35 @@ class GETPROXYAUTO:
         self.method_1()
     def method_1(self):
         def run(self):
-            print(' coming soon')
-            time.sleep(5)
-            sys.exit()
+            threading.Thread(target = genproxyX, args = (self,)).start()
+
+
+        def genproxyX(self):
+            while True:
+                try:
+                    proxylist = requests.get('https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list').text
+                    loadproxy = proxylist.splitlines()
+                    for nextporxy in loadproxy:
+                        json_porxy = json.loads(nextporxy)
+                        if json_porxy['country'] == "TH" and json_porxy['type'] == "http":
+                            proxy = (json_porxy['host']+':'+ str(json_porxy['port']))
+                            proxiesX = {'http': ('http://'+proxy),'https': ('https://'+proxy), 'ftp': ('ftp://'+proxy)}
+                            Foundproxy = ('this proxy gen buy fate0 ' + str(proxy))
+                            threading.Thread(target = checkproxy, args = (self,proxiesX,proxy,Foundproxy)).start()
+                    time.sleep(60)
+                except:
+                    print('wait network . . .')
+
+        def checkproxy(self,proxies,proxy,Foundproxy):
+            IMAGE = GETIMAGE(proxies)
+            if IMAGE != 0:
+                with open('control/proxy.txt','r') as loadproxy:
+                    proxylist = loadproxy.read().splitlines()
+                    if proxy not in proxylist:
+                        print(' Found proxy: %s' % Foundproxy)
+                        with open('control/proxy.txt', 'a') as f:
+                             f.write(proxy+'\n')
+
 
 
 
