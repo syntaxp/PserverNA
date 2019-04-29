@@ -1,5 +1,6 @@
 import configparser,sys
 import threading,time,ctypes,re
+import gc
 from colorama import init, Fore, Back, Style
 sys.path.insert(0, "PLAYSERVER/")
 from data_playserver import *
@@ -89,6 +90,7 @@ class PSERVERNA_PAYLOADS:
             setdelay = 0
             delay = 0
             while (int(self.true) < int(self.maxvote)):
+                gc.collect()
                 IMAGE = GETIMAGE(proxies)
                 if IMAGE != 0:
                     captcha = GETCAPCHA(self,IMAGE['base64'])
