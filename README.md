@@ -114,4 +114,13 @@ proxy จะมี 2 แบบ
 [settings/apisetup](https://anti-captcha.com/clients/settings/apisetup)
 Maximum bid เพิ่มขึ้นเป็น 1.1 หรือมากกว่านั้น
 
+## dlepx
+```text
+ระบบเช็ค proxy ที่สามารถใช้งานได้ นำ proxy ที่ต้องการเช็คไปไว้ใน sniffproxy/proxy.txt
+proxy ที่่ใช้งานได้จะเก็บไว้ใน dletsave.txt
+proxy ที่ถูกแบน จะเก็บไว้ใน bansave.txt
+```
 
+แก้ timeout
+
+https://github.com/syntaxp/PserverNA/blame/master/dlepx/DLet/DLetajx.py#L27
