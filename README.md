@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="https://github.com/syntaxp/PserverNA">
-    <img src="https://user-images.githubusercontent.com/47280575/59976572-9837e380-95f0-11e9-9ee6-d41de7c7846e.png" alt="PserverNA logo" width="77" height="75">
+    <img src="https://user-images.githubusercontent.com/47280575/59976572-9837e380-95f0-11e9-9ee6-d41de7c7846e.png" alt="PserverNA logo" width="150" height="150">
   </a>
 </p>
 <h3 align="center">PserverNX</h3>
@@ -135,7 +135,7 @@ proxy จะมี 2 แบบ
 ## Chat Commands
 
 | Command         | Description | Example  |
-| ------ | -------------------------- | --- |
+| ----------- | -------------------------- | --- |
 | psn | เริ่มการทำงาน Autovote  | psn |
 | dle | เช็ค proxy เช็คจาก (p_list.txt) | dle |
 | ca  | เช็ค  key anti-captcha | ca |
