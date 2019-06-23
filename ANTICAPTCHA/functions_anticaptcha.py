@@ -6,11 +6,11 @@ from data_anticaptcha import *
 def GETCAPCHA(self,base64):
     try:
         Taskdata = {
-        "clientKey":self.key,
+        "clientKey":self.opx["key"],
         "task":
         {
         "type":"ImageToTextTask",
-        "body":base64,
+        "body":base64["base64"],
         "phrase":False,
         "case":False,
         "numeric":False,
@@ -25,13 +25,13 @@ def GETCAPCHA(self,base64):
         createTask  = requests.post(create_task_url,timeout=100,json=Taskdata).json()
         if createTask['errorId'] == 0:
             TaskID = {
-                "clientKey":self.key,
+                "clientKey":self.opx["key"],
                 "taskId": createTask['taskId']
                     }
             for timeout in range(60):
                 captcha_id = requests.post(get_result_url,timeout=100, json = TaskID).json()
                 if captcha_id['status'] != 'processing':
-                    captcha = {'status':True,'text':captcha_id['solution']['text'],'cost':captcha_id['cost'],'taskId':createTask['taskId']}
+                    captcha = {'status':True,'text':captcha_id['solution']['text'],'cost':captcha_id['cost'],'taskId':createTask['taskId'],'id':base64['id']}
                     return captcha
                 else:
                     time.sleep(5)
@@ -44,15 +44,14 @@ def GETCAPCHA(self,base64):
 def GETbalance(key):
     try:
         data = {'clientKey':key}
-        time.sleep(0.5)
-        p = requests.post(get_balance_url,timeout=100,headers=header,json=data).json()
+        p = requests.post(get_balance_url,timeout=5,headers=header,json=data).json()
         if p['errorId'] == 0:
             return p['balance']
         else:
             print('can not get balance error :'+p['errorDescription'])
-            return 0
+            return -10
     except:
-        return 0
+        return -10
 
 def reportIncorrectImageCaptcha(key,taskid):
     data = {
