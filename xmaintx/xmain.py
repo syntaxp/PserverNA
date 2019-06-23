@@ -43,6 +43,7 @@ def psnx_f(self,proxies,proxy):
     sd = 0
     dl = 0
     fv = 0
+    ftx = 0
     while (int(self.tss)< int(self.opx["maxvote"]) and self.rpx == True ):
         updates_col(self)
         threadsx = []
@@ -77,7 +78,7 @@ def psnx_f(self,proxies,proxy):
                         gs =  msp - sd
                         pd = dl - gs
                         if pd >= 0:
-                                time.sleep(pd-0.1)
+                                time.sleep(pd-float(self.opx["dl"]))
                     dl = 0
                     dtv = {'server_id':self.opx["server"],'captcha': h['text'], 'gameid': self.opx["userid"], 'checksum': h['id']}
                     vt = POSTIMAGE(self,dtv,proxies,h['taskId'],proxy)
@@ -89,8 +90,15 @@ def psnx_f(self,proxies,proxy):
                         else:
                             if ft == False :
                                 ft = True
+                            if vt > 100:
+                                ftx += 1
+                                if ftx >= int(self.opx["f_request"]):
+                                    self.pw -= 1
+                                    sys.exit()
+                                vt = vt-100
                             sd = time.time()
                             dl = int(vt)
+                            
                 else:
                     self.w.addstr("error"+str(h['errorDescription'])+"\n",self.redcolor)
                     self.w.refresh()
