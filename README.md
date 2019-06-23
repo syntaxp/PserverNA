@@ -1,13 +1,13 @@
 
 <p align="center">
   <a href="https://github.com/syntaxp/PserverNA">
-    <img src="https://user-images.githubusercontent.com/47280575/55755362-ff75db00-5a78-11e9-8a33-6ea3af4bdb0e.jpg" alt="PserverNA logo" width="72" height="72">
+    <img src="https://user-images.githubusercontent.com/47280575/59976572-9837e380-95f0-11e9-9ee6-d41de7c7846e.png" alt="PserverNA logo" width="77" height="75">
   </a>
 </p>
-<h3 align="center">PserverNA</h3>
+<h3 align="center">PserverNX</h3>
 
 <p align="center"> 
-  PserverNA เป็นเพียงซอฟแวร์ที่ให้บริการเชื่อมต่อ API ของAntiCaptcha กับ เว็ป Playserver เราไม่มีการเรียกเก็บเงินใดๆ
+  PserverNX เป็นเพียงซอฟแวร์ที่ให้บริการเชื่อมต่อ API ของAntiCaptcha กับ เว็ป Playserver เราไม่มีการเรียกเก็บเงินใดๆ
   เพียงแต่ผู้ใช้จำเป็นต้องเช่า KEY ของเว็ป AntiCaptcha เพื่อใช้บริการ แกะรหัส รูปภาพ เราไม่มีส่วนเกี่ยวของ กับ AntiCaptcha ในทางใดทั้งสิ้น
   <br>
 
@@ -25,7 +25,7 @@
 - [การทำงานเบื้องต้นของโปรแกรม](#basic-work)
 - [KEY](#key)
 - [การตั่งค่า config.txt](#config)
-- [Proxylist.txt](#proxy)
+- [proxydict](#proxy)
 - [UPDATE!!](https://github.com/syntaxp/PserverNA/blob/master/update.md)
 
 ## Quick start
@@ -37,7 +37,7 @@
 ## Basic work
 
 ```text
-PserverN
+PserverNX
 |
 └──> ดึงข้อมูลจาก / Playserver.in.th
         ├── รหัสรูปภาพ, รูปภาพ 
@@ -69,10 +69,19 @@ userid = #user id ของเกม
 
 [option]
 maxvote = 500 # จำนวนโหวตที่ต้องการ ควรมากกว่ ip ที่มีใน list
-autoproxy = 0 # ค้นหาพร๊อกซี่อัตโนมัติ (bata) 1 เปิด/  0 ปิด
+maximage = 2 # จำนวนสต๊อกรูปต่อ 1 ไอพี ไม่ควรมากกว่า 5
+max_thread = 50 # จำนวนเช็ค proxy ไม่ให้มากกว่านี้
+t_request = 5 # เวลาที่ใช้ในการ เรียกข้อมูล
+m_request = 5 # จำนวนการเชื่อมต่อ server ใหม่ถ้าไม่สามารถเชื่อมต่อได้ 
+f_request = 3 # จำนวนที่ต้องการดีด proxy ออกหาก โหวตพลาดกี่ครั้ง
+s_dlefail = 1 # เปิด ปิดการแจ้งเตือน เช็ค proxy ที่ใช้งานไม่ได้
+s_psnfail = 1 # เปิด ปิดการแจ้งเตือนหากโหวตพลาด
+s_psnw = 1 # เปิด ปิดการเตือนหาก proxy มีดีเลย์
+dl = 0.2 # ใช้ในอานาคต
+
 
 ```
-***example: config.txt***
+***example: config.ini***
 ```java
 [default]
 key_anticap = d4555884848484c48a4cac88ac
@@ -81,13 +90,28 @@ userid  = pserverna
 
 [option]
 maxvote = 1000
-autoproxy = 1
-
+maximage = 2
+max_thread = 50
+t_request = 5
+m_request = 5
+f_request = 3
+s_dlefail = 1
+s_psnfail = 1
+s_psnw = 1
+dl = 0.2
 ```
+
 ## Proxy
-**[proxy.txt](https://github.com/syntaxp/PserverNA/blob/master/control/proxy.txt)**
+**[proxydict](https://github.com/syntaxp/PserverNA/tree/master/proxydict)**
+
+
 ```text
-proxy.txt จะเป็นไฟล์ txt ที่ใช้สำหรับเก็บรายชื่อ proxy ต่างๆที่ใช้สำหรับโหวต
+p_list.txt = proxy ที่หามาได้
+p_blist.txt = proxy ที่ถูกแบน
+p_wlist.txt = proxy ที่สามารถใช้งานได้
+```
+```text
+p_list.txt จะเป็นไฟล์ txt ที่ใช้สำหรับเก็บรายชื่อ proxy ต่างๆที่ใช้สำหรับโหวต
 เนื้องจาก การโหวต Playserver ปกติ เมื่อโหวตสำเร็จ จะติดดีเลเป็นเวล 61 วิ
 เราจึงจำเป็นต้องมี proxy ใช้สำหรับโหวตเพิ่มขึ้นเพื่อการทำงานโหวตที่ไวขึ้น
 Playserver กำจัดสิทธ์โหวตให้เพียง IP ที่ให้บริการในไทย นั้นหมายความว่า เราเลือกเฉพาะ Proxy ไทยในการโหวต
@@ -97,30 +121,37 @@ proxy จะมี 2 แบบ
 แบบปกติคือแจกตามเว็ปทั่วไปสามารถ search ได้จาก google 'proxy list' , 'proxy list thai'
 แบบที่ 2 จะเป็น proxy แบบเช่า ซึ่งจะยกประเด็นนี้ไปในหัวข้อ private proxy
 
-หลังจากที่เราได้ proxy มาแล้วให้เราก๊อปแล้วนำไปวางใน proxylist.txt
+หลังจากที่เราได้ proxy มาแล้วให้เราก๊อปแล้วนำไปวางใน p_list.txt
 ```
-***example: proxylist.txt***
+
+***example: p_list.txt***
 ```text
 103.15.140.141:44759
 103.15.140.142:44759
 ```
 
 
-## Error
-```text
-"take a long time from https://anti-captcha.com" - ต้องเพิ่มค่าใช้จ่ายในการตอบแคปช่า
-```
-ไปที่ 
-[settings/apisetup](https://anti-captcha.com/clients/settings/apisetup)
-Maximum bid เพิ่มขึ้นเป็น 1.1 หรือมากกว่านั้น
 
-## dlepx
-```text
-ระบบเช็ค proxy ที่สามารถใช้งานได้ นำ proxy ที่ต้องการเช็คไปไว้ใน sniffproxy/proxy.txt
-proxy ที่่ใช้งานได้จะเก็บไว้ใน dletsave.txt
-proxy ที่ถูกแบน จะเก็บไว้ใน bansave.txt
-```
+## Chat Commands
 
-แก้ timeout
+| Command         | Description | Example  |
+| ------ | -------------------------- | --- |
+| psn | เริ่มการทำงาน Autovote  | psn |
+| dle | เช็ค proxy เช็คจาก (p_list.txt) | dle |
+| ca  | เช็ค  key anti-captcha | ca |
+| fate2| เรียกใช้งาน  [fatex](#fatex) | fate2 |
+| fate0 <minutes_ago>| ดึง proxy จาก  https://github.com/fate0/proxylist | fate0 16 |
+| get <config_name> | โชว์ config | get key |
+| <config_name> <value> | เปลี่ยน value config | key 12345678901100 |
+  
+  
+## fateX 
 
-https://github.com/syntaxp/PserverNA/blame/master/dlepx/DLet/DLetajx.py#L27
+<img src="https://user-images.githubusercontent.com/47280575/59977053-b6084700-95f6-11e9-8953-3eb3a44b4d2f.png" alt="PserverNA logo" width="40" height="35">
+
+
+**fateX** และ **fate0**
+ทำหน้าเหมือนกันคือใช้งาน ดึง proxy มาแล้วทำการช็ค จากนั้น proxy จะถูกส่งไปยัง proxydict ตามสถานะที่เช็ค
+
+
+
