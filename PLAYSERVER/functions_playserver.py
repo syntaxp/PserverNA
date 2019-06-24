@@ -55,7 +55,7 @@ def POSTIMAGE(self,data_vote, proxies,taskid,proxy):
                         stdx = (str(proxy)+' has already been used to vote > vote next time '+ str(vote['wait']))
                         self.w.addstr(str(stdx)+"\n",self.yellowcolor)
                         self.w.refresh()
-                    return vote['wait']
+                    return int(vote['wait'])+100
         except:
             time.sleep(1)
     return False
