@@ -160,6 +160,7 @@ def autovote(self):
 
         for x in foo:
             x.start()
+            time.sleep(1.5)
         for x in foo:
             x.join()
         self.w.addstr(("PserverNX success True ({0}) False ({1}) \n").format(self.tss,self.fss),self.cyancolor)
