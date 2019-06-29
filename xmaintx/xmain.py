@@ -64,7 +64,7 @@ def psnx_f(self,proxies,proxy):
                 threadcap.append(cp)
             else:
                 fv += 1
-                if fv >= int(self.opx["f_request"]):
+                if fv >= int(self.opx["m_request"]):
                     self.pw -= 1
                     sys.exit()
 
@@ -92,14 +92,14 @@ def psnx_f(self,proxies,proxy):
                         else:
                             if ft == False :
                                 ft = True
-                            if vt > 100:
+                            if vt != 61:
                                 ftx += 1
                                 if ftx >= int(self.opx["f_request"]):
                                     self.pw -= 1
                                     sys.exit()
-                                vt = vt-100
                             sd = time.time()
                             dl = int(vt)
+
                             
                 else:
                     self.w.addstr("error"+str(h['errorDescription'])+"\n",self.redcolor)
@@ -107,6 +107,7 @@ def psnx_f(self,proxies,proxy):
             else:
                 self.w.addstr("take a long time from https://anti-captcha.com \n",self.redcolor)
                 self.w.refresh()
+
 
 
     if self.rpx == False:
