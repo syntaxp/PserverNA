@@ -4,9 +4,11 @@ from functions_anticaptcha import *
 
 
 def GETIMAGE(self,proxies):
+
     try:
         rid = self.session.post(self.psv["getimage"], timeout=int(self.opx["t_request"]), headers=self.psv["header"],proxies=proxies).json()
         IMAGE_ID = rid['checksum']
+
         IMAGECT = self.session.get(self.psv["u_image"] + IMAGE_ID, timeout=int(self.opx["t_request"]),  headers=self.psv["header"],proxies=proxies)
         base64pic = base64.b64encode(IMAGECT.content).decode('utf-8')
         if base64pic.find('iVBORw0KGgoAAAANSUhE') > -1:
@@ -22,12 +24,13 @@ def GETIMAGE(self,proxies):
 def POSTIMAGE(self,data_vote, proxies,taskid,proxy):
     for timeout in range(60):
         try:
+
             status_post = ('IMAGE ID : {0}\nCAPTCHA  : {1} \nSTATUS   : {2}   DELAY : {3}   REPORT : {4}')
             vote = self.session.post(self.psv["submit"],timeout=int(self.opx["t_request"]),headers=self.psv["header"],data=data_vote,proxies=proxies).json()
             if vote['success'] == True:
                 self.tss +=1
                 stdx = status_post.format(data_vote['checksum'],data_vote['captcha'],vote['success'],vote['wait'],'0')
-                self.w.addstr(stdx+"\n",self.greencolor)
+                self.w.addstr(str(proxy)+" : \n"+stdx+"\n",self.greencolor)
                 self.w.refresh()
                 return vote['wait']
             else:
@@ -55,7 +58,7 @@ def POSTIMAGE(self,data_vote, proxies,taskid,proxy):
                         stdx = (str(proxy)+' has already been used to vote > vote next time '+ str(vote['wait']))
                         self.w.addstr(str(stdx)+"\n",self.yellowcolor)
                         self.w.refresh()
-                    return int(vote['wait'])+100
+                    return vote['wait']
         except:
             time.sleep(1)
     return False
