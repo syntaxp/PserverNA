@@ -78,7 +78,7 @@ def psnx_f(self,proxies,proxy):
                         gs =  msp - sd
                         pd = dl - gs
                         if pd >= 0:
-                                time.sleep(pd-float(self.opx["dl"]))
+                                time.sleep(pd)
                     dl = 0
                     dtv = {'server_id':self.opx["server"],'captcha': h['text'], 'gameid': self.opx["userid"], 'checksum': h['id']}
                     vt = POSTIMAGE(self,dtv,proxies,h['taskId'],proxy)
