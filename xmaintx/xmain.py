@@ -54,6 +54,7 @@ def psnx_f(self,proxies,proxy):
             threadsx.append(tg)
         for x in threadsx:
             x.start()
+            time.sleep(0.5)
         for x in threadsx:
             c = x.join()
             IMAG.append(c)
@@ -69,6 +70,7 @@ def psnx_f(self,proxies,proxy):
 
         for x in threadcap:
             x.start()
+            time.sleep(0.5)
         for x in threadcap:
             h = x.join()
             if h != 0:
@@ -135,7 +137,6 @@ def autovote(self):
         self.w.refresh()
         hh = threading.Thread(target = psnx_f, args = (self,0,0))
         foo.append(hh)
-
         with open('proxydict/p_wlist.txt','r') as fp:
             px = fp.read().splitlines()
             for proxy in px:
@@ -160,7 +161,7 @@ def autovote(self):
 
         for x in foo:
             x.start()
-            time.sleep(1.5)
+            time.sleep(0.5)
         for x in foo:
             x.join()
         self.w.addstr(("PserverNX success True ({0}) False ({1}) \n").format(self.tss,self.fss),self.cyancolor)
