@@ -34,17 +34,21 @@ def updates_col(self):
     if self.tss != 0 or self.fss != 0:
             fianl = self.tss+self.fss
             self.pss = self.tss/fianl*100
-    j = (' {0} :  server: {1} - proxy: [ {2} ]  ,true ({3}) ,false ({4}) ,success({5}%), - PserverNX').format(self.opx["userid"],self.opx["server"],self.pw,self.tss,self.fss,"%.2f"%self.pss)
+    j = (f' {self.opx["userid"]} :  server: {self.opx["server"]} - proxy: [ {self.pw} ]  ,true ({self.tss}) ,false ({self.fss}) ,success({"%.2f"%self.pss}%), - PserverNX')
     ctypes.windll.kernel32.SetConsoleTitleW(j)
+
+
 
 def psnx_f(self,proxies,proxy):
     self.pw += 1
-    ft = False
+    self.w.addstr(f"{proxy} This proxy join ({self.pw})  \n",self.cyancolor)
+    self.w.refresh()
+    ft = None
     sd = 0
     dl = 0
     fv = 0
     ftx = 0
-    while (int(self.tss)< int(self.opx["maxvote"]) and self.rpx == True ):
+    while (int(self.tss)< int(self.opx["maxvote"]) and self.rpx):
         updates_col(self)
         threadsx = []
         threadcap = []
@@ -55,67 +59,64 @@ def psnx_f(self,proxies,proxy):
         for x in threadsx:
             x.start()
             time.sleep(0.5)
-        for x in threadsx:
-            c = x.join()
+        for x2 in threadsx:
+            c = x2.join()
             IMAG.append(c)
         for p in IMAG:
-            if p != 0:
+            if p:
                 cp = ThreadWithReturnValue(target = GETCAPCHA, args = (self,p))
                 threadcap.append(cp)
             else:
                 fv += 1
                 if fv >= int(self.opx["m_request"]):
+                    self.w.addstr(f"{proxy} This proxy has exit max request  \n",self.redcolor)
+                    self.w.refresh()
                     self.pw -= 1
                     sys.exit()
 
-        for x in threadcap:
-            x.start()
-            time.sleep(0.5)
-        for x in threadcap:
-            h = x.join()
-            if h != 0:
-                if h['status'] != False:
-                    if ft == True:
+        for x3 in threadcap:
+            x3.start()
+            time.sleep(0.2)
+        for x4 in threadcap:
+            h = x4.join()
+            if h:
+                if h['status']:
+                    if ft:
                         msp = time.time()
                         gs =  msp - sd
-                        pd = dl - gs
-                        if pd >= 0:
-                                time.sleep(pd)
-                    dl = 0
+                        if dl >= gs:
+                            time.sleep(int(dl-gs))
                     dtv = {'server_id':self.opx["server"],'captcha': h['text'], 'gameid': self.opx["userid"], 'checksum': h['id']}
                     vt = POSTIMAGE(self,dtv,proxies,h['taskId'],proxy)
                     updates_col(self)
-                    if vt != False:
-                        if vt == -1:
-                            self.pw -= 1
-                            sys.exit()
-                        else:
-                            if ft == False :
-                                ft = True
-                            if vt != 61:
-                                ftx += 1
-                                if ftx >= int(self.opx["f_request"]):
-                                    self.pw -= 1
-                                    sys.exit()
-                            sd = time.time()
-                            dl = int(vt)
-
+                    if vt:
+                        if ft is None:
+                            ft = True
+                        if vt != 61:
+                            ftx += 1
+                            if ftx >= int(self.opx["f_request"]):
+                                self.pw -= 1
+                                self.w.addstr(f"{proxy} This proxy has exit fail request  \n",self.redcolor)
+                                self.w.refresh()
+                                sys.exit()
+                        sd = time.time()
+                        dl = int(vt)
+                    elif vt is None:
+                        self.pw -= 1
+                        sys.exit()
                             
                 else:
-                    self.w.addstr("error"+str(h['errorDescription'])+"\n",self.redcolor)
+                    self.w.addstr(f"error : {h['errorDescription']}\n",self.redcolor)
                     self.w.refresh()
             else:
                 self.w.addstr("take a long time from https://anti-captcha.com \n",self.redcolor)
                 self.w.refresh()
 
-
-
-    if self.rpx == False:
-        self.w.addstr(proxy+" this proxy  exit | Psnx turn off   . . . \n",self.redcolor)
-        self.w.refresh()
-    else:
+    if self.rpx:
         self.w.addstr(proxy+" this proxy  exit | maxvote turn off   . . . \n",self.greencolor)
-        self.w.refresh()
+    else:
+        self.w.addstr(proxy+" this proxy  exit | Psnx turn off   . . . \n",self.redcolor)
+    self.w.refresh()
 
 def updateseesion(self):
     self.session = requests.Session()
@@ -126,8 +127,10 @@ def updateseesion(self):
 
 
 
+
+
 def autovote(self):
-    if self.rpx == True:
+    if self.rpx:
         #setsen
         foo = []
         updateseesion(self)
@@ -162,10 +165,38 @@ def autovote(self):
 
         for x in foo:
             x.start()
-            time.sleep(0.5)
+            time.sleep(0.2)
+        for x in foo:
+            x.start()
+            time.sleep(0.2)
         for x in foo:
             x.join()
-        self.w.addstr(("PserverNX success True ({0}) False ({1}) \n").format(self.tss,self.fss),self.cyancolor)
+        self.w.addstr((f"PserverNX success True ({self.tss}) False ({self.fss}) \n"),self.cyancolor)
+        self.w.refresh()
+
+def addproxy(self,proxy):
+    if self.rpx:
+        try:
+            if '@'  in proxy:
+                spinpx = proxy.split("@")
+                xproxy, port = spinpx[2].split(':')
+            else:
+                xproxy, port = proxy.split(':')
+            if xproxy not in self.dicx_proxy:
+                self.dicx_proxy[xproxy] = port
+                proxies = {'http': ('http://'+proxy),'https': ('https://'+proxy), 'ftp': ('ftp://'+proxy)}
+                threading.Thread(target = psnx_f, args = (self,proxies,proxy)).start()
+            elif port not in self.dicx_proxy[xproxy]:
+                proxies = {'http': ('http://'+proxy),'https': ('https://'+proxy), 'ftp': ('ftp://'+proxy)}
+                threading.Thread(target = psnx_f, args = (self,proxies,proxy)).start()
+            else:
+                self.w.addstr(f"{proxy} This proxy have in lists  \n",self.redcolor)
+                self.w.refresh()
+        except:
+            self.w.addstr("fail check your proxy \n",self.redcolor)
+            self.w.refresh()
+    else:
+        self.w.addstr("Please run PSNX \n",self.redcolor)
         self.w.refresh()
 
 
@@ -186,7 +217,7 @@ def updatesv(self):
             "Referer": (self.psv["cb_vote"]+unpack_fn)
         }
         for i in self.psv: 
-            self.w.addstr(i+"  : "+ str(self.psv[i]) + "\n",self.greencolor)
+            self.w.addstr(f"{i} : {self.psv[i]}\n",self.greencolor)
         self.w.refresh()
 
     except:
@@ -205,7 +236,9 @@ def commands_psnx(self,b):
     #call commands
     try:
         co,ca = cmx.split(' ')
-        if co == "fate0":
+        if co == "add":
+            threading.Thread(target = addproxy, args = (self,ca)).start()
+        elif co == "fate0":
             if type(int(ca)) == int:
                 if int(ca) > 14:
                     self.w.addstr("max value fate0 14 !!  \n",self.redcolor)
@@ -218,7 +251,7 @@ def commands_psnx(self,b):
                 self.w.refresh()
             else:
                 self.opx[co] = ca
-                self.w.addstr("Chang value "+co+" > "+self.opx[co]+"\n",self.cyancolor)
+                self.w.addstr(f"Chang value {co} > {self.opx[co]}\n",self.cyancolor)
                 self.w.refresh()
             cf = configparser.RawConfigParser()
             cf.read('control/config.ini')
@@ -236,19 +269,19 @@ def commands_psnx(self,b):
                     cf.write(configfile)          
         elif co == "get":
             if ca in self.opx:
-                self.w.addstr(ca+" : "+self.opx[ca]+"\n",self.greencolor)
+                self.w.addstr(f"{ca} : {self.opx[ca]}\n",self.greencolor)
                 self.w.refresh()
             elif ca == "config":
                 self.w.addstr("---------------------- All config -----------------------\n",self.greencolor)
                 for i in self.opx: 
-                    self.w.addstr(i+"  : "+ str(self.opx[i]) + "\n",self.greencolor)
+                    self.w.addstr(f"{i}  :  {str(self.opx[i])} \n",self.greencolor)   
                 self.w.addstr("---------------------------------------------------------\n",self.greencolor)
                 self.w.refresh()
             else:
-                self.w.addstr('"'+cmx+'"'+" command not found\n",self.redcolor)
+                self.w.addstr(f'"{cmx}" command not found\n',self.redcolor)
                 self.w.refresh()
         else:
-            self.w.addstr('"'+cmx+'"'+" command not found\n",self.redcolor)
+            self.w.addstr(f'"{cmx}" command not found\n',self.redcolor)
             self.w.refresh()
     except:
         if cmx == "ca":
@@ -256,21 +289,21 @@ def commands_psnx(self,b):
         elif cmx == "fate2":
             webbrowser.open("FateX.exe")
         elif cmx == "dle":
-            if self.ppx == False:
+            if self.ppx:
+                self.w.addstr("dlepx is runing can stop Please wait \n",self.redcolor)
+            else:
                 self.ppx =True
                 updateseesion(self)
                 threading.Thread(target = dlepx_nx, args = (self,)).start()
-            else:
-                self.w.addstr("dlepx is runing can stop Please wait \n",self.redcolor)
-                self.w.refresh()
+            self.w.refresh()
         elif cmx == "psn":
-            if self.rpx == False:
-                self.rpx =True
-                threading.Thread(target = autovote, args = (self,)).start()
-            else:
+            if self.rpx:
                 self.rpx = False
                 self.w.addstr("PSNX is  turn off wait for loop exit !!! \n",self.redcolor)
-                self.w.refresh()
+            else:
+                self.rpx =True
+                threading.Thread(target = autovote, args = (self,)).start()
+            self.w.refresh()
         else:
             self.w.addstr('"'+cmx+'"'+" command not found\n",self.redcolor)
             self.w.refresh()
@@ -280,15 +313,15 @@ def commands_psnx(self,b):
 def check_ca(self):
     self.w.addstr(": Check key from anti-captcha.com . . .\n",self.yellowcolor)
     self.w.refresh()
-    self.opx["balance"]  = str(GETbalance(self.opx["key"]))
+    self.opx["balance"]  = GETbalance(self.opx["key"])
     self.w.refresh()
-    if self.opx["balance"] != "-10":
-        self.w.addstr("Key     : "+ str(self.opx["key"]) +"\n",self.greencolor)
-        self.w.addstr("Balance : "+ str(self.opx["balance"]) +"\n",self.greencolor)        
-    else:
-        self.w.addstr("Key     : "+ self.opx["key"] +"\n",self.redcolor)
-        self.w.addstr("Balance :  error 0x0" +"\n",self.redcolor) 
+    if self.opx["balance"] is None:
+        self.w.addstr(f"Key     :{self.opx['key']} \n",self.redcolor)
+        self.w.addstr(f"Balance :{self.opx['balance']}\n",self.redcolor)   
         self.w.addstr("Please check your key . . .\n",self.redcolor)
+    else:
+        self.w.addstr(f"Key     :{self.opx['key']} \n",self.greencolor)
+        self.w.addstr(f"Balance :{self.opx['balance']}\n",self.greencolor)        
     self.w.refresh()
 
 def callpsnx():
@@ -297,7 +330,6 @@ def callpsnx():
 
 class PserverNX(object):                                                         
     def __init__(self, stdscreen):
-        #value
         self.rpx = False
         self.ppx = False
         self.spx = 0
@@ -314,7 +346,7 @@ class PserverNX(object):
         curses.curs_set(0) 
         ts = os.get_terminal_size()
         self.xline = (int(ts.lines)-1)
-        self.w= curses.newwin(self.xline, int(ts.columns),0, 0)
+        self.w = curses.newwin(self.xline, int(ts.columns),0, 0)
         self.w.scrollok(1)
         self.w.nodelay(0)
         curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK) # error command
@@ -346,9 +378,8 @@ class PserverNX(object):
             "s_dlefail" : int(cf.get("option", "s_dlefail")),
             "s_psnfail" : int(cf.get("option", "s_psnfail")),
             "s_psnw" : int(cf.get("option", "s_psnw")),
-            "dl" : float(cf.get("option", "dl"))
         }
-        self.opx["balance"]  = str(GETbalance(self.opx["key"]))
+        self.opx["balance"]  = GETbalance(self.opx["key"])
         #set url server
         self.psv = {
             "u_server" : "https://playserver.in.th/index.php/Server/",
@@ -358,18 +389,11 @@ class PserverNX(object):
         }
        
         self.w.addstr("--------------------------- Config ---------------------------\n",self.greencolor)
-        self.w.addstr("Server  : "+ self.opx["server"] +"\n",self.greencolor)
-        self.w.addstr("Userid  : "+ self.opx["userid"] +"\n",self.greencolor)
-        self.w.addstr("Maxvote : "+ self.opx["maxvote"] +"\n",self.greencolor)
-        if str(self.opx["balance"]) != "-10":
-            self.w.addstr("Key     : "+ self.opx["key"] +"\n",self.greencolor)
-            self.w.addstr("Balance : "+ self.opx["balance"] +"\n",self.greencolor)
-            self.w.addstr("--------------------------------------------------------------\n",self.greencolor)
-        else:
-            self.w.addstr("Key     : "+ self.opx["key"] +"\n",self.redcolor)
-            self.w.addstr("Balance :  error 0x0" +"\n",self.redcolor) 
-            self.w.addstr("--------------------------------------------------------------\n",self.greencolor)
-            self.w.addstr("Please check your key . . .\n",self.redcolor)
+        for strx in self.opx:
+            if self.opx[strx] is None:
+                self.w.addstr(f"{strx}  : {self.opx[strx]}\n",self.redcolor)
+            else:
+                self.w.addstr(f"{strx}  : {self.opx[strx]}\n",self.greencolor)
         updatesv(self)
         #set session
         self.session = requests.Session()
