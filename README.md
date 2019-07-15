@@ -77,7 +77,6 @@ f_request = 3 # จำนวนที่ต้องการดีด proxy อ
 s_dlefail = 1 # เปิด ปิดการแจ้งเตือน เช็ค proxy ที่ใช้งานไม่ได้
 s_psnfail = 1 # เปิด ปิดการแจ้งเตือนหากโหวตพลาด
 s_psnw = 1 # เปิด ปิดการเตือนหาก proxy มีดีเลย์
-dl = 0.2 # ลดเวลาในการรอโหวต เผื่อ proxy ทำงานช้า ค่าที่แนะนำ 0.1 - 0.5
 
 
 ```
@@ -98,7 +97,6 @@ f_request = 3
 s_dlefail = 1
 s_psnfail = 1
 s_psnw = 1
-dl = 0.2
 ```
 
 ## Proxy
@@ -143,6 +141,7 @@ proxy จะมี 2 แบบ
 | fate0 <minutes_ago>| ดึง proxy จาก  https://github.com/fate0/proxylist | fate0 16 |
 | get <config_name> | โชว์ config | get key |
 | <config_name> <value> | เปลี่ยน value config | key 12345678901100 |
+| add <proxy>| เพิ่ม proxy รายตัว | add 123.123.123:80 |
   
   
 ## fateX 
