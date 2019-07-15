@@ -39,7 +39,7 @@ def GETCAPCHA(self,base64):
             captcha = {'status':False,'errorDescription':createTask['errorDescription']}
             return captcha
     except:
-        return 0
+        return False
 
 def GETbalance(key):
     try:
@@ -48,10 +48,9 @@ def GETbalance(key):
         if p['errorId'] == 0:
             return p['balance']
         else:
-            print('can not get balance error :'+p['errorDescription'])
-            return -10
+            return None
     except:
-        return -10
+        return None
 
 def reportIncorrectImageCaptcha(key,taskid):
     data = {
