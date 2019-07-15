@@ -4,7 +4,6 @@ from functions_anticaptcha import *
 
 
 def GETIMAGE(self,proxies):
-
     try:
         rid = self.session.post(self.psv["getimage"], timeout=int(self.opx["t_request"]), headers=self.psv["header"],proxies=proxies).json()
         IMAGE_ID = rid['checksum']
@@ -16,21 +15,19 @@ def GETIMAGE(self,proxies):
             'base64':base64pic}
             return IMAGE
         else:
-            return 0
+            return False
     except :
-        return 0
+        return False
 
 
 def POSTIMAGE(self,data_vote, proxies,taskid,proxy):
     for timeout in range(60):
         try:
-
-            status_post = ('IMAGE ID : {0}\nCAPTCHA  : {1} \nSTATUS   : {2}   DELAY : {3}   REPORT : {4}')
             vote = self.session.post(self.psv["submit"],timeout=int(self.opx["t_request"]),headers=self.psv["header"],data=data_vote,proxies=proxies).json()
-            if vote['success'] == True:
+            self.w.refresh()
+            if vote['success']:
                 self.tss +=1
-                stdx = status_post.format(data_vote['checksum'],data_vote['captcha'],vote['success'],vote['wait'],'0')
-                self.w.addstr(str(proxy)+" : \n"+stdx+"\n",self.greencolor)
+                self.w.addstr(f"{proxy} : SUCCESS  !! IMAGE ID : {data_vote['checksum']} -> {data_vote['captcha']}\n",self.greencolor)
                 self.w.refresh()
                 return vote['wait']
             else:
@@ -39,24 +36,20 @@ def POSTIMAGE(self,data_vote, proxies,taskid,proxy):
                 if md5_error == 'b4ecb33fc4dd1515eae17c9afcf8b90d': #The image has expired or has been used.
                     self.fss += 1
                     if self.opx["s_psnfail"] == 1:
-                        stdx = (str(proxy)+' The image has expired or has been used.. ')
-                        self.w.addstr(str(stdx)+"\n",self.redcolor)
+                        self.w.addstr(f"{proxy} : FAIL image has been used.  !! IMAGE ID : {data_vote['checksum']} -> {data_vote['captcha']}\n",self.redcolor)
                         self.w.refresh()
-                    self.pw -= 1
-                    return -1
+                    return None
                 elif md5_error == '47b84f936cfa1a104fa5d44821639363': #The code in the image is incorrect.
                     self.fss += 1
                     if self.opx["s_psnfail"] == 1:
-                        stdx = (str(proxy)+' The code in the image is incorrect. ')
-                        self.w.addstr(str(stdx)+"\n",self.redcolor)
+                        self.w.addstr(f"{proxy} : FAIL The code in the image is incorrect.  !! IMAGE ID : {data_vote['checksum']} -> {data_vote['captcha']}\n",self.redcolor)
                         self.w.refresh()
                     reportIncorrectImageCaptcha(self.opx["key"],taskid)
                     return vote['wait']
                 else:
                     self.fss += 1
                     if self.opx["s_psnw"] == 1:
-                        stdx = (str(proxy)+' has already been used to vote > vote next time '+ str(vote['wait']))
-                        self.w.addstr(str(stdx)+"\n",self.yellowcolor)
+                        self.w.addstr(f"{proxy} : FAIL Proxy Wait  !! IMAGE ID : {data_vote['checksum']} -> {data_vote['captcha']} Next Vote Time {vote['wait']}\n",self.yellowcolor)
                         self.w.refresh()
                     return vote['wait']
         except:
