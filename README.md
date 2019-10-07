@@ -20,13 +20,12 @@
 
 
 ## คู่มือ การใช้งาน
-- <a href="https://www.youtube.com/watch?v=KWmf4K1T_SU">วิธีติดตั่ง/ตัวอย่าง(VIDEO)</a>
+- <a href="https://www.youtube.com/watch?v=KWmf4K1T_SU">วิธีติดตั้ง/ตัวอย่าง(VIDEO)</a>
 - [Quick start](#quick-start)
 - [การทำงานเบื้องต้นของโปรแกรม](#basic-work)
 - [KEY](#key)
-- [การตั่งค่า config.txt](#config)
-- [proxydict](#proxy)
-- [UPDATE!!](https://github.com/syntaxp/PserverNA/blob/master/update.md)
+- [การตั้งค่า config.txt](#config)
+- [Proxydict](#proxy)
 
 ## Quick start
 - [Download the latest release.](https://github.com/syntaxp/PserverNA/archive/master.zip)
