@@ -10,7 +10,7 @@ def GETIMAGE(self,proxies):
 
         IMAGECT = self.session.get(self.psv["u_image"] + IMAGE_ID, timeout=int(self.opx["t_request"]),  headers=self.psv["header"],proxies=proxies)
         base64pic = base64.b64encode(IMAGECT.content).decode('utf-8')
-        if base64pic.find('iVBORw0KGgoAAAANSUhE') > -1:
+        if base64pic.find('/9j/4AAQSkZJRgABAQEAYABgAAD') > -1:
             IMAGE = {'id':IMAGE_ID,
             'base64':base64pic}
             return IMAGE
