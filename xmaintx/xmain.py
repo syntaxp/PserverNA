@@ -147,7 +147,7 @@ def autovote(self):
                 try:
                     if '@'  in proxy:
                         spinpx = proxy.split("@")
-                        xproxy, port = spinpx[2].split(':')
+                        xproxy, port = spinpx[1].split(':')
                     else:
                         xproxy, port = proxy.split(':')
                     if xproxy not in self.dicx_proxy:
